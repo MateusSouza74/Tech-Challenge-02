@@ -17,7 +17,8 @@ select = [
 ]
 
 ignore = [
-    "D107",  # __init__ de classe não precisa de docstring
+    "D107",   # __init__ de classe não precisa de docstring
+    "ANN401", # **kwargs: Any é passthrough legítimo
 ]
 
 [lint.pydocstyle]

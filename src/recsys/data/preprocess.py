@@ -81,7 +81,7 @@ def run(
         msg = f"rating.csv não encontrado em {raw_dir}"
         raise FileNotFoundError(msg)
 
-    print(f"📄 Lendo {ratings_path}...")
+    print(f"Lendo {ratings_path}...")
     df = pd.read_csv(ratings_path)
     print(f"   Interações brutas: {len(df):,}")
 
@@ -144,7 +144,7 @@ def run(
     with (processed_dir / "metadata.json").open("w", encoding="utf-8") as f:
         json.dump(metadata, f, indent=2)
 
-    print("✅ Pré-processamento concluído!")
+    print("Pré-processamento concluído!")
 
 
 if __name__ == "__main__":

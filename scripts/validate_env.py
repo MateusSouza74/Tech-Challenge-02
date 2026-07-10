@@ -52,10 +52,10 @@ def _check_packages() -> list[str]:
     for module_name, display_name in REQUIRED_PACKAGES:
         try:
             importlib.import_module(module_name)
-            print(f"  ✅ {display_name}")
+            print(f"  [ok] {display_name}")
         except ImportError:
             errors.append(display_name)
-            print(f"  ❌ {display_name} — não encontrado")
+            print(f"  [erro] {display_name} — não encontrado")
     return errors
 
 
@@ -66,10 +66,10 @@ def _check_env_file(root: Path) -> list[str]:
 
     if not env_path.exists():
         errors.append(".env não encontrado")
-        print("  ❌ Arquivo .env não encontrado na raiz do projeto")
+        print("  [erro] Arquivo .env não encontrado na raiz do projeto")
         return errors
 
-    print("  ✅ Arquivo .env encontrado")
+    print("  [ok] Arquivo .env encontrado")
 
     content = env_path.read_text(encoding="utf-8")
     required_keys = [
@@ -80,10 +80,10 @@ def _check_env_file(root: Path) -> list[str]:
     ]
     for key in required_keys:
         if key in content:
-            print(f"  ✅ {key} definido")
+            print(f"  [ok] {key} definido")
         else:
             errors.append(f"{key} ausente no .env")
-            print(f"  ❌ {key} ausente no .env")
+            print(f"  [erro] {key} ausente no .env")
     return errors
 
 
@@ -93,10 +93,10 @@ def _check_directories(root: Path) -> list[str]:
     for rel in REQUIRED_DIRS:
         dirpath = root / rel
         if dirpath.is_dir():
-            print(f"  ✅ {rel}/")
+            print(f"  [ok] {rel}/")
         else:
             errors.append(f"Diretório {rel}/ ausente")
-            print(f"  ❌ {rel}/ — diretório ausente")
+            print(f"  [erro] {rel}/ — diretório ausente")
     return errors
 
 
@@ -105,7 +105,7 @@ def main() -> int:
     root = _find_project_root()
     all_errors: list[str] = []
 
-    print(f"\n🔍 Validando ambiente em: {root}\n")
+    print(f"\nValidando ambiente em: {root}\n")
 
     print("── Pacotes Python ──")
     all_errors.extend(_check_packages())
@@ -117,13 +117,13 @@ def main() -> int:
     all_errors.extend(_check_directories(root))
 
     if all_errors:
-        print(f"\n⚠️  {len(all_errors)} problema(s) encontrado(s):")
+        print(f"\nAviso: {len(all_errors)} problema(s) encontrado(s):")
         for err in all_errors:
             print(f"   • {err}")
         print()
         return 1
 
-    print("\n✅ Ambiente validado com sucesso!\n")
+    print("\n[ok] Ambiente validado com sucesso!\n")
     return 0
 
 

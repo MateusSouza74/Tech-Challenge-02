@@ -139,7 +139,7 @@ def _print_report(all_metrics: dict[str, float], model_names: list[str]) -> None
         all_metrics: Métricas no formato ``modelo/métrica@k``.
         model_names: Modelos avaliados, na ordem das colunas.
     """
-    print("📊 Resultados da avaliação:")
+    print("Resultados da avaliação:")
     header = f"{'Métrica':<16}" + "".join(f"{name:>14}" for name in model_names)
     print(header)
     print("-" * len(header))
@@ -195,7 +195,7 @@ def run(
         json.dump(all_metrics, f, indent=2)
 
     _print_report(all_metrics, list(models))
-    print(f"\n✅ Relatório salvo em {report_path}")
+    print(f"\nRelatório salvo em {report_path}")
 
 
 if __name__ == "__main__":

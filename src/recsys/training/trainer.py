@@ -187,12 +187,12 @@ class Trainer:
 
             # Early stopping
             if self.early_stopping.should_stop(val_loss):
-                print(f"  ⏹️  Early stopping na época {epoch}")
+                print(f"  Early stopping na época {epoch}")
                 break
 
         # Carregar melhor checkpoint
         self.model.load_state_dict(torch.load(best_path, weights_only=True))
         mlflow.log_metric("best_val_loss", self._best_val_loss)
-        print(f"✅ Treino concluído! Melhor val_loss: {self._best_val_loss:.4f}")
+        print(f"Treino concluído! Melhor val_loss: {self._best_val_loss:.4f}")
 
         return best_path

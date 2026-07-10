@@ -65,11 +65,11 @@ def _print_summary(results: list[ExperimentResult], best: ExperimentResult) -> N
         results: Resultados de todos os runs executados.
         best: Run vencedor.
     """
-    print("\n📊 Comparativo dos experimentos:")
+    print("\nComparativo dos experimentos:")
     print(f"{'Run':<14}{'val_loss':>12}")
     print("-" * 26)
     for result in results:
-        marker = " ⭐" if result["run_id"] == best["run_id"] else ""
+        marker = " *" if result["run_id"] == best["run_id"] else ""
         print(f"{result['run_name']:<14}{result['best_val_loss']:>12.4f}{marker}")
 
 
@@ -86,7 +86,7 @@ def run(models_dir: Path | None = None) -> ExperimentResult:
 
     results: list[ExperimentResult] = []
     for config in _CONFIGS:
-        print(f"\n🚀 Experimento: {config.run_name}")
+        print(f"\nExperimento: {config.run_name}")
         run_id, val_loss = train_run(config=config, models_dir=models_dir)
         results.append(
             {"run_name": config.run_name, "run_id": run_id, "best_val_loss": val_loss}
@@ -95,7 +95,7 @@ def run(models_dir: Path | None = None) -> ExperimentResult:
     best = min(results, key=lambda r: r["best_val_loss"])
     best_path = _save_best(best, models_dir)
     _print_summary(results, best)
-    print(f"\n✅ Melhor run salvo em {best_path}")
+    print(f"\nMelhor run salvo em {best_path}")
     return best
 
 

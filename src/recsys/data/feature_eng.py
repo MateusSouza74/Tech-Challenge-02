@@ -164,7 +164,7 @@ def run(
     with (processed_dir / "metadata.json").open("w", encoding="utf-8") as f:
         json.dump(meta, f, indent=2)
 
-    print("✅ Feature engineering concluído!")
+    print("Feature engineering concluído!")
 
 
 if __name__ == "__main__":

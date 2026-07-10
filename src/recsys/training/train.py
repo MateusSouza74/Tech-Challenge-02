@@ -199,7 +199,7 @@ def _train_and_save(
     # e não suporta o forward com dois tensores (user_ids, item_ids).
     mlflow.pytorch.log_model(model, name="model", serialization_format="pickle")
 
-    print(f"✅ Modelo salvo em {final_path}")
+    print(f"Modelo salvo em {final_path}")
     return trainer.best_val_loss
 
 

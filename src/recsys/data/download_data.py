@@ -28,7 +28,7 @@ def download_movielens(dest: Path | None = None) -> Path:
     dest = dest or settings.data_raw_dir
     dest.mkdir(parents=True, exist_ok=True)
 
-    print("⬇️  Baixando MovieLens-20M via kagglehub...")
+    print("Baixando MovieLens-20M via kagglehub...")
     source = Path(kagglehub.dataset_download("grouplens/movielens-20m-dataset"))
 
     # kagglehub pode retornar o diretório pai; precisamos do subdir real.
@@ -44,14 +44,14 @@ def download_movielens(dest: Path | None = None) -> Path:
         src_file = csv_dir / name
         if src_file.exists():
             shutil.copy2(src_file, dest / name)
-            print(f"  ✅ {name} → {dest / name}")
+            print(f"  {name} → {dest / name}")
             copied += 1
         else:
-            print(f"  ⚠️  {name} não encontrado em {csv_dir}")
+            print(f"  Aviso: {name} não encontrado em {csv_dir}")
 
     if copied == 0:
         # Listar o que existe para debug
-        print(f"  ℹ️  Arquivos disponíveis em {csv_dir}:")
+        print(f"  Arquivos disponíveis em {csv_dir}:")
         for f in sorted(csv_dir.iterdir()):
             print(f"      {f.name}")
 
@@ -87,7 +87,7 @@ def sample_ratings(
         msg = f"rating.csv não encontrado em {raw_dir}"
         raise FileNotFoundError(msg)
 
-    print(f"📄 Lendo {ratings_path}...")
+    print(f"Lendo {ratings_path}...")
     df = pd.read_csv(ratings_path)
     print(f"   Total de interações: {len(df):,}")
 
@@ -97,7 +97,7 @@ def sample_ratings(
 
     out_path = processed_dir / "ratings_sample.csv"
     df.to_csv(out_path, index=False)
-    print(f"   ✅ Salvo em {out_path}")
+    print(f"   Salvo em {out_path}")
 
     return out_path
 

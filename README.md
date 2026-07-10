@@ -3,7 +3,7 @@
 Recomendação de produtos a partir do comportamento de navegação: rede neural
 (PyTorch), pipeline reprodutível (DVC), tracking (MLflow) e clean code.
 
-> 🚧 README completo será finalizado na Etapa 4.
+> README completo será finalizado na Etapa 4.
 
 ## Estrutura
 - `src/recsys/` — código-fonte (pacote instalável, src-layout)
@@ -13,7 +13,7 @@ Recomendação de produtos a partir do comportamento de navegação: rede neural
 - `tests/` — testes
 - `data/`, `models/`, `configs/` — dados, artefatos e configs
 
-## 🚀 Preparando o Ambiente e Instalando Dependências
+## Preparando o Ambiente e Instalando Dependências
 
 Este projeto utiliza o **Poetry** para o gerenciamento de dependências. Siga o passo a passo abaixo para rodar localmente:
 

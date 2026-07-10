@@ -56,7 +56,7 @@ def register_model(run_id: str, model_name: str = _MODEL_NAME) -> str:
         Número da versão criada.
     """
     version = mlflow.register_model(f"runs:/{run_id}/model", model_name)
-    print(f"📦 Registrado '{model_name}' versão {version.version}")
+    print(f"Registrado '{model_name}' versão {version.version}")
     return version.version
 
 
@@ -75,7 +75,7 @@ def promote(model_name: str, version: str, stage: str) -> None:
         stage=stage,
         archive_existing_versions=(stage == "Production"),
     )
-    print(f"🚀 '{model_name}' v{version} promovido para {stage}")
+    print(f"'{model_name}' v{version} promovido para {stage}")
 
 
 def run(models_dir: Path | None = None, model_name: str = _MODEL_NAME) -> None:
@@ -90,7 +90,7 @@ def run(models_dir: Path | None = None, model_name: str = _MODEL_NAME) -> None:
 
     best = _load_best_run(models_dir)
     print(
-        f"🏆 Melhor run: {best['run_name']} "
+        f"Melhor run: {best['run_name']} "
         f"(val_loss={best['best_val_loss']:.4f}, id={best['run_id']})"
     )
 

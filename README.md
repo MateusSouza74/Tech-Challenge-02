@@ -73,3 +73,80 @@ O DVC executa apenas os estágios cujas dependências mudaram:
 | `evaluate` | compara NCF vs baselines com 4 métricas de ranking | `models/evaluation_report.json` |
 
 Para rodar um estágio específico: `poetry run dvc repro train`.
+
+## Experimentos e Model Registry (MLflow)
+
+Depois do `dvc repro`, os experimentos treinam o NCF com três
+configurações (embeddings 16, 32 e 64) — cada uma vira um run no MLflow
+com parâmetros, métricas e artefatos:
+
+```bash
+poetry run python -m recsys.training.experiments
+```
+
+O melhor run (menor loss de validação) fica em `models/best_run.json`.
+Para registrá-lo no Model Registry e promovê-lo pelos estágios
+Staging -> Production:
+
+```bash
+poetry run python -m recsys.training.registry
+```
+
+Para explorar os runs (aba *Experiments*) e as versões do modelo
+`ncf-recommender` (aba *Models*):
+
+```bash
+poetry run mlflow ui --backend-store-uri sqlite:///mlflow.db
+```
+
+## Resultados
+
+Métricas de ranking no conjunto de teste (K = 10), sobre 1.174 usuários
+ativos do MovieLens-20M:
+
+| Métrica | NCF | Popularidade | KNN de usuários |
+|---|---|---|---|
+| Precision@10 | **0.2852** | 0.2780 | 0.2796 |
+| Recall@10 | 0.0443 | **0.0452** | 0.0451 |
+| MAP@10 | 0.1682 | 0.1893 | **0.1911** |
+| NDCG@10 | 0.2694 | 0.2927 | **0.2939** |
+
+O NCF vence em precisão do top-10; os baselines ainda ordenam melhor
+(MAP/NDCG) neste volume de dados. Análise completa, limitações e vieses
+no [Model Card](docs/MODEL_CARD.md).
+
+## Docker
+
+O `docker-compose.yml` sobe um servidor MLflow e roda o treino em
+container apontando para ele:
+
+```bash
+docker compose up --build
+```
+
+- MLflow UI: http://localhost:5000
+- `data/` e `models/` são montados como volumes — rode o download dos
+  dados e o `dvc repro` até `feature_eng` no host antes.
+
+## Testes e qualidade
+
+```bash
+poetry run pytest             # testes unitarios
+poetry run ruff check .       # lint
+poetry run ruff format .      # formatacao
+poetry run pre-commit install # hooks de lint no commit
+```
+
+## Reproduzindo os resultados do zero
+
+```bash
+poetry install
+poetry run python -m recsys.data.download_data
+poetry run dvc repro
+poetry run python -m recsys.training.experiments
+poetry run python -m recsys.training.registry
+```
+
+A reprodutibilidade é garantida por sementes fixas (`RANDOM_SEED=42`,
+aplicada a PyTorch e NumPy), dados versionados com DVC e todos os runs
+rastreados no MLflow.

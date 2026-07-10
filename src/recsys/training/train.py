@@ -194,6 +194,9 @@ def _train_and_save(
     mlflow.log_artifact(str(final_path))
     mlflow.log_artifact(str(processed_dir / "metadata.json"))
 
+    # Modelo no formato MLflow: habilita o registro de versões no Registry.
+    mlflow.pytorch.log_model(model, name="model")
+
     print(f"✅ Modelo salvo em {final_path}")
     return trainer.best_val_loss
 

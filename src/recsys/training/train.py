@@ -195,7 +195,9 @@ def _train_and_save(
     mlflow.log_artifact(str(processed_dir / "metadata.json"))
 
     # Modelo no formato MLflow: habilita o registro de versões no Registry.
-    mlflow.pytorch.log_model(model, name="model")
+    # Serialização pickle: o formato pt2 exige assinatura via TensorSpec
+    # e não suporta o forward com dois tensores (user_ids, item_ids).
+    mlflow.pytorch.log_model(model, name="model", serialization_format="pickle")
 
     print(f"✅ Modelo salvo em {final_path}")
     return trainer.best_val_loss

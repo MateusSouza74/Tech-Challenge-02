@@ -2,7 +2,7 @@
 
 Etapas executadas (stage ``preprocess`` do DVC):
 1. Leitura do ``rating.csv`` bruto
-2. Binarização: rating >= 3.5 → interação positiva (simula navegação/clique)
+2. Binarização: rating >= 3.5 → interação positiva (usuário gostou do filme)
 3. Amostragem determinística por usuários ativos (se configurado)
 4. Label-encoding de user_id e item_id para índices contíguos
 5. Split temporal em treino / validação / teste (64/16/20)
@@ -21,7 +21,7 @@ import pandas as pd
 from recsys.preprocessing.strategies import LabelEncodeStrategy
 from recsys.utils.config import settings
 
-# Limiar para binarização: simula "usuário se interessou pelo produto".
+# Limiar para binarização: avaliação a partir da qual o usuário "gostou do filme".
 _RATING_THRESHOLD = 3.5
 
 # Proporções do split temporal.

@@ -1,7 +1,7 @@
-"""Modelo Neural Collaborative Filtering (NCF) para recomendação de produtos.
+"""Modelo Neural Collaborative Filtering (NCF) para recomendação de filmes.
 
 Combina embeddings de usuário e item em um MLP multicamadas para prever
-a probabilidade de interação (clique / navegação) em um e-commerce.
+a probabilidade de um usuário se interessar por um filme.
 """
 
 from __future__ import annotations
@@ -25,8 +25,8 @@ class NCFRecommender(RecommenderModel, nn.Module):
         2. Embedding de item   (dim ``embedding_dim``)
         3. Concatenação → MLP com camadas decrescentes → sigmoid
 
-    O modelo aprende representações latentes que capturam o padrão de
-    navegação dos usuários e a similaridade entre produtos.
+    O modelo aprende representações latentes que capturam o gosto dos
+    usuários e a similaridade entre filmes.
     """
 
     def __init__(
